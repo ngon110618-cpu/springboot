@@ -67,7 +67,6 @@
                     </div>
                     <form th:action="@{/admin/students/save}" th:object="${editingStudent}" method="post">
                         <div class="card-body">
-                            <!-- Chỉ gửi ID ẩn khi đang ở chế độ chỉnh sửa (ID khác null) -->
                             <input type="hidden" th:if="${editingStudent != null and editingStudent.id != null}" th:field="*{id}" />
 
                             <div class="row g-3">
@@ -94,6 +93,24 @@
                             <a th:if="${editingStudent != null and editingStudent.id != null}" th:href="@{/admin/students}" class="btn btn-secondary ms-1">Hủy</a>
                         </div>
                     </form>
+                </div>
+
+                <!-- Form Tìm Kiếm (Bổ sung cho Yêu cầu 10) -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form th:action="@{/admin/students}" method="get" class="row g-2 align-items-center">
+                            <div class="col-md-5">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+                                    <input type="text" name="keyword" th:value="${keyword}" class="form-control" placeholder="Nhập tên hoặc mã sinh viên cần tìm...">
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-info text-white"><i class="fa-solid fa-search me-1"></i> Tìm Kiếm</button>
+                                <a th:href="@{/admin/students}" class="btn btn-outline-secondary ms-1"><i class="fa-solid fa-rotate-left me-1"></i> Tất Cả</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
                 <!-- Bảng Dữ Liệu -->
@@ -127,6 +144,9 @@
                                         <i class="fa-solid fa-trash"></i> Xóa
                                     </a>
                                 </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(students)}">
+                                <td colspan="5" class="text-center text-muted py-3">Không tìm thấy sinh viên nào phù hợp.</td>
                             </tr>
                             </tbody>
                         </table>
