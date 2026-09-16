@@ -18,7 +18,7 @@
                     <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"><i class="fa-solid fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-md-block">
-                    <a href="/admin/students" class="nav-link fw-bold">Trang Quản Trị Sinh Viên</a>
+                    <a th:href="@{/admin/students}" class="nav-link fw-bold">Trang Quản Trị Sinh Viên</a>
                 </li>
             </ul>
         </div>
@@ -26,7 +26,7 @@
 
     <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
         <div class="sidebar-brand">
-            <a href="/admin/students" class="brand-link">
+            <a th:href="@{/admin/students}" class="brand-link">
                 <span class="brand-text fw-light">AdminLTE 4</span>
             </a>
         </div>
@@ -34,7 +34,7 @@
             <nav class="mt-2">
                 <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu">
                     <li class="nav-item">
-                        <a href="/admin/students" class="nav-link active">
+                        <a th:href="@{/admin/students}" class="nav-link active">
                             <i class="nav-icon fa-solid fa-user-graduate"></i>
                             <p>Quản Lý Sinh Viên</p>
                         </a>
@@ -67,7 +67,9 @@
                     </div>
                     <form th:action="@{/admin/students/save}" th:object="${editingStudent}" method="post">
                         <div class="card-body">
-                            <input type="hidden" th:field="*{id}" />
+                            <!-- Chỉ gửi ID ẩn khi đang ở chế độ chỉnh sửa (ID khác null) -->
+                            <input type="hidden" th:if="${editingStudent != null and editingStudent.id != null}" th:field="*{id}" />
+
                             <div class="row g-3">
                                 <div class="col-md-3">
                                     <label class="form-label fw-bold">Mã SV</label>
@@ -89,7 +91,7 @@
                                 <i class="fa-solid fa-save me-1"></i>
                                 <span th:text="${editingStudent != null and editingStudent.id != null} ? 'Lưu Cập Nhật' : 'Thêm Mới'"></span>
                             </button>
-                            <a th:if="${editingStudent != null and editingStudent.id != null}" href="/admin/students" class="btn btn-secondary ms-1">Hủy</a>
+                            <a th:if="${editingStudent != null and editingStudent.id != null}" th:href="@{/admin/students}" class="btn btn-secondary ms-1">Hủy</a>
                         </div>
                     </form>
                 </div>

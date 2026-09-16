@@ -22,7 +22,7 @@ public class AdminStudentController {
     public String index(Model model) {
         model.addAttribute("students", studentRepository.findAll());
         model.addAttribute("editingStudent", new Student());
-        return "student-list"; // Đã đổi từ "admin/student-list"
+        return "student-list";
     }
 
     @GetMapping("/edit/{id}")
@@ -30,11 +30,16 @@ public class AdminStudentController {
         Student student = studentRepository.findById(id).orElseGet(Student::new);
         model.addAttribute("students", studentRepository.findAll());
         model.addAttribute("editingStudent", student);
-        return "student-list"; // Đã đổi từ "admin/student-list"
+        return "student-list";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Student editingStudent) {
+    public String save(@ModelAttribute("editingStudent") Student editingStudent) {
+        // Nếu là sinh viên cũ (đang sửa) nhưng id bị rỗng thì giữ nguyên,
+        // nếu là sinh viên mới thì nếu id chưa có, gán ngẫu nhiên UUID
+        if (editingStudent.getId() == null) {
+            editingStudent.setId(UUID.randomUUID());
+        }
         studentRepository.save(editingStudent);
         return "redirect:/admin/students";
     }
