@@ -58,7 +58,7 @@
         <div class="app-content">
             <div class="container-fluid">
 
-                <!-- Form Thêm / Cập Nhật -->
+                <!-- Form Thêm / Cập Nhật (Đã Sửa Chuẩn Binding) -->
                 <div class="card card-outline mb-4"
                      th:classappend="${editingStudent != null and editingStudent.id != null} ? 'card-warning' : 'card-primary'">
                     <div class="card-header">
@@ -67,7 +67,8 @@
                     </div>
                     <form th:action="@{/admin/students/save}" th:object="${editingStudent}" method="post">
                         <div class="card-body">
-                            <input type="hidden" th:if="${editingStudent != null and editingStudent.id != null}" th:field="*{id}" />
+                            <!-- Đã sửa: Luôn có field ID ẩn nhưng giá trị sẽ gửi đúng dạng UUID hoặc để trống -->
+                            <input type="hidden" name="id" th:value="${editingStudent != null && editingStudent.id != null ? editingStudent.id : ''}" />
 
                             <div class="row g-3">
                                 <div class="col-md-3">
@@ -95,7 +96,7 @@
                     </form>
                 </div>
 
-                <!-- Form Tìm Kiếm (Bổ sung cho Yêu cầu 10) -->
+                <!-- Form Tìm Kiếm -->
                 <div class="card mb-4">
                     <div class="card-body">
                         <form th:action="@{/admin/students}" method="get" class="row g-2 align-items-center">
