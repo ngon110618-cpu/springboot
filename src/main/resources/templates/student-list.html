@@ -24,6 +24,7 @@
         </div>
     </nav>
 
+    <!-- SIDEBAR MỚI ĐÃ ĐƯỢC THÊM 2 MỤC -->
     <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
         <div class="sidebar-brand">
             <a th:href="@{/admin/students}" class="brand-link">
@@ -33,10 +34,27 @@
         <div class="sidebar-wrapper">
             <nav class="mt-2">
                 <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu">
+                    <!-- 1. Quản Lý Sinh Viên -->
                     <li class="nav-item">
                         <a th:href="@{/admin/students}" class="nav-link active">
                             <i class="nav-icon fa-solid fa-user-graduate"></i>
                             <p>Quản Lý Sinh Viên</p>
+                        </a>
+                    </li>
+
+                    <!-- 2. Quản Lý Học Phần (Mới thêm) -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa-solid fa-book"></i>
+                            <p>Quản Lý Học Phần</p>
+                        </a>
+                    </li>
+
+                    <!-- 3. Quản Lý Phòng Học (Mới thêm) -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa-solid fa-school"></i>
+                            <p>Quản Lý Phòng Học</p>
                         </a>
                     </li>
                 </ul>
@@ -58,7 +76,7 @@
         <div class="app-content">
             <div class="container-fluid">
 
-                <!-- Form Thêm / Cập Nhật (Đã Sửa Chuẩn Binding) -->
+                <!-- Form Thêm / Cập Nhật -->
                 <div class="card card-outline mb-4"
                      th:classappend="${editingStudent != null and editingStudent.id != null} ? 'card-warning' : 'card-primary'">
                     <div class="card-header">
@@ -67,7 +85,6 @@
                     </div>
                     <form th:action="@{/admin/students/save}" th:object="${editingStudent}" method="post">
                         <div class="card-body">
-                            <!-- Đã sửa: Luôn có field ID ẩn nhưng giá trị sẽ gửi đúng dạng UUID hoặc để trống -->
                             <input type="hidden" name="id" th:value="${editingStudent != null && editingStudent.id != null ? editingStudent.id : ''}" />
 
                             <div class="row g-3">
